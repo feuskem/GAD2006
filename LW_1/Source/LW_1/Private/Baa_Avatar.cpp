@@ -43,7 +43,7 @@ void ABaa_Avatar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Health = FMath::Min(MaxHealth, Health + HealingRate * DeltaTime);
+	
 
 	if (GetCharacterMovement()->MovementMode == EMovementMode::MOVE_Walking) {
 		if (StaminaDrained)
