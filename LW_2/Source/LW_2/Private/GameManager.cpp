@@ -116,7 +116,7 @@ void AGameManager::ReturnPreviousMove()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("There is no orevious move"));
+		UE_LOG(LogTemp, Error, TEXT("There is no previous move"));
 	}
 }
 
