@@ -22,7 +22,7 @@ void AGameManager::OnActorClicked(AActor* Actor, FKey button)
 	if (!Slot) return;
 
 	if (!ThePlayer) {
-		UE_LOG(LogTemp, Error, TEXT("No Player Unit Detected!"));
+		UE_LOG(LogTemp, Error, TEXT("Player not detected"));
 		return;
 	}
 
@@ -83,41 +83,41 @@ void AGameManager::Tick(float DeltaTime)
 
 bool AGameManager::UndoLastMove()
 {
+
 	if (CommandPool.IsEmpty())
 	{
+		UE_LOG(LogTemp, Error, TEXT("There is no previous move"))
 		return false;
+		
 	}
 	else
 	{
-		return true;
-	}
-}
-
-void AGameManager::ReturnPreviousMove()
-{
-	if (!ThePlayer)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Player not detected"));
-	}
-
-	if (UndoLastMove())
-	{
-		TSharedPtr<Command> LastMove = CommandPool.Pop();
-
-		TSharedPtr<MoveCommand> LastMoveAsMoveCommand = StaticCastSharedPtr<MoveCommand>(LastMove);
-
-		if (LastMoveAsMoveCommand.IsValid())
+		if (!ThePlayer)
 		{
-			TSharedRef<MoveCommand> Cmd =
-				MakeShared<MoveCommand>(ThePlayer->Slot->GridPosition, LastMoveAsMoveCommand->Source);
+			UE_LOG(LogTemp, Error, TEXT("Player not detected"));
+			return false;
+		}
+		else
+		{
+			TSharedRef<Command> Cmd = CommandPool.Pop();
 			Cmd->Revert();
 			CurrentCommand = Cmd;
+			return true;
 		}
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("There is no previous move"));
-	}
 }
+		
+		
+		
+		
+			
+			
+		
+		
+	
+
+
+
+
 
 
